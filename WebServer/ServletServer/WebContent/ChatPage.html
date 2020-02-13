@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>chatPage</title>
+<script type="text/javascript" src="Update.js"></script>
+
+<script>
+	var id = sessionStorage.getItem('Username');    
+    var token = sessionStorage.getItem('Token');
+    
+    function chat() {
+        var input = document.getElementById("input1");
+        var inputValue = input.value;
+        if(inputValue == ""){
+            alert("No message");
+            return;
+        }
+        
+        var xhr;
+        if(window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        }else{
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        xhr.onreadystatechange=function(){
+        
+		}
+        
+        var event = document.getElementById("event").innerHTML;
+        if(event == ""){
+            alert("please join the event you want to leave message.");
+            return;
+        }
+        
+        xhr.open("POST","Server");
+        xhr.setRequestHeader("MessageType", "Chat");
+        xhr.setRequestHeader("UserName", id);
+        xhr.setRequestHeader("Token", token);
+        xhr.setRequestHeader("EventId", event);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        xhr.send("Message=" + inputValue);
+    }
+    
+    function joinEvent(){
+    	var event = document.getElementById("event").innerHTML;
+    	
+    	var xhr;
+        if(window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        }else{
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        xhr.onreadystatechange=function(){
+        
+		}
+        
+        var event = document.getElementById("event").innerHTML;
+        if(event == ""){
+            alert("please join the event you want to leave message.");
+            return;
+        }
+        
+        xhr.open("POST","Server");
+        xhr.setRequestHeader("MessageType", "Join");
+        xhr.setRequestHeader("Token", token);
+        xhr.setRequestHeader("UserName", id);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        xhr.send("EventId=" + event);
+    }
+    
+    function chooseEvent1(){
+        var user = document.getElementById("event1");
+        document.getElementById("event").innerHTML = 43414399638;
+        joinEvent();
+    }
+    
+    function chooseEvent2(){
+        var user = document.getElementById("event2");
+        document.getElementById("event").innerHTML = 53840180429;
+        joinEvent();
+    }
+    
+    function chooseEvent3(){
+        var user = document.getElementById("event3");
+        document.getElementById("event").innerHTML = 58046154611;
+        joinEvent();
+    }
+    
+    function returnToHome(){
+    	window.location.href='HomePage.html'
+    }
+</script>
+
+</head>
+
+<body>
+	<button type="button" onclick="returnToHome()">Home page</button><br>
+    <h3>Enter a letter:</h3>
+    <form action=""> 
+        Message: <input type="text" id="input1"/>
+        <button type="button" id="button1" onclick="chat()">submit</button>
+    </form>
+    <p>Send message to: </p>
+    <p id = "event"></p><br>
+    <p>information:<br> <span id="txtHint"></span></p> <br>
+    <p>Other user:</p>
+    <p id = "event1" onclick = "chooseEvent1()">James Cameron - Challenging the Deep Tickets</p>
+    <p id = "event2" onclick = "chooseEvent2()">End of Session | TOGA Party 18+</p>
+    <p id = "event3" onclick = "chooseEvent3()">1 Million Women LoveEarth Festival</p>
+</body>
+</html>

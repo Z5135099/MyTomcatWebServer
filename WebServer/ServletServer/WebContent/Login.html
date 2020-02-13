@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UNSW life</title>
+
+<script>
+function login(){
+	var userName = document.getElementById("username").value
+	if(userName == ""){
+		alert("Please enter your username.")
+		return 
+	}
+	
+	var password = document.getElementById("password").value
+	if(password == ""){
+		alert("Please enter your password.")
+		return
+	}
+	
+	var xhr;
+	if(window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest();
+	}else{
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+    
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4){
+			if(xhr.status==200){
+			    var respond = unescape(xhr.responseText)
+			    if(respond == "False"){
+			    	alert("The please check your username and password")
+			    	
+			    }else{
+			    	window.location.href='HomePage.html'
+			    	sessionStorage.setItem('Username',userName);
+			    	sessionStorage.setItem('Token',respond);
+			    }
+			}
+		}
+	}
+    
+	xhr.open("POST","http://10.249.60.84:8080/ServletServer/Server");
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+	xhr.send("MessageType=" + "Login" + "&UserName=" + userName + "&Password=" + password);
+}
+
+function signUp(){
+	window.location.href='Signup.html'
+}
+
+</script>
+</head>
+
+<body>
+	<div align="center">
+	    <p>username</p>
+	    <input type="text" id="username"/><br>
+	    <p>password</p>
+	    <input type="text" id="password"/><br>
+	    <button type="button" id="button" onclick="login()">login</button><br>
+	    <button type="button" id="button" onclick="signUp()">sign up</button>
+    </div>
+</body>
+</html>
